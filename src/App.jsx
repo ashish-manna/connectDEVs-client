@@ -4,6 +4,7 @@ import Layout from './pages/Layout'
 import { Provider } from 'react-redux'
 import appStore from './redux/appStore'
 import Feed from './pages/Feed'
+import Profile from './pages/Profile'
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='/' element={<Feed />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='/login' element={<Login />} />
           </Route>
         </Routes>
