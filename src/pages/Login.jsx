@@ -1,13 +1,27 @@
+import axios from "axios";
 import { useState } from "react"
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
+
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const handleSubmit = () => {
-        console.log(name, email, password);
+    const [email, setEmail] = useState("sachin@gamil.com");
+    const [password, setPassword] = useState("Sachin@123");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleSubmit = async () => {
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/login`, { email, password }, { withCredentials: true });
+            dispatch(addUser(res.data.user));
+            navigate("/");
+        } catch (err) {
+            console.log(err.message);
+        }
     }
     return (
         <div className="w-full flex justify-center py-10 md:py-20">
@@ -52,7 +66,7 @@ const Login = () => {
                                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                             </g>
                         </svg>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="mail@site.com" required />
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="mail@gmail.com" required />
                     </label>
                     <label className="input validator">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
