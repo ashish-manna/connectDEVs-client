@@ -6,6 +6,7 @@ import appStore from './redux/appStore'
 import Feed from './pages/Feed'
 import Profile from './pages/Profile'
 import Connections from './pages/Connections'
+import Request from './pages/Request'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
             <Route path='/' element={<Feed />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/connections' element={<Connections />} />
+            <Route path='/request' element={<Request />} />
             <Route path='/login' element={<Login />} />
           </Route>
         </Routes>

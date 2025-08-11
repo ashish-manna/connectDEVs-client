@@ -21,11 +21,10 @@ const Connections = () => {
         getConnectionList();
     }, [])
 
-    if (connectionList.length === 0) return <div>Your connections will show here.</div>
+    if (connectionList?.length === 0) return <div>Your connections will show here.</div>
     return connectionList && (
         <div className="w-full md:max-w-1/2 mx-0 md:mx-auto">
             <ul className="list bg-base-100 rounded-box shadow-md">
-
                 <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Your Connections</li>
                 {connectionList.map((user) =>
                     <li className="list-row">
