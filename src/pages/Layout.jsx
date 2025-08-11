@@ -12,15 +12,13 @@ const Layout = () => {
     const navigate = useNavigate();
 
     const fetchUser = async () => {
-        if (!user) {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile/view`, { withCredentials: true })
-                console.log(res);
-                dispatch(addUser(res.data.user));
-            } catch (err) {
-                navigate("/login");
-                console.log(err.message);
-            }
+        if (user) return;
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile/view`, { withCredentials: true })
+            dispatch(addUser(res.data.user));
+        } catch (err) {
+            navigate("/login");
+            console.log(err.message);
         }
     }
     useEffect(() => {
