@@ -25,11 +25,13 @@ const Layout = () => {
         fetchUser();
     }, []);
     return (
-        <>
+        <div className=''>
             <Navbar />
-            <Outlet />
+            <div className='pt-20 min-h-screen'>
+                <Outlet />
+            </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

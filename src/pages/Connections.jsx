@@ -21,7 +21,7 @@ const Connections = () => {
         getConnectionList();
     }, [])
 
-    if (connectionList?.length === 0) return <div>Your connections will show here.</div>
+    if (connectionList?.length === 0) return <div className="text-center opacity-75">Your connections will show here.</div>
     return connectionList && (
         <div className="w-full md:max-w-1/2 mx-0 md:mx-auto">
             <ul className="list bg-base-100 rounded-box shadow-md">
