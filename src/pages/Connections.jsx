@@ -27,7 +27,7 @@ const Connections = () => {
                 <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Your Connections</li>
                 {connectionList.map((user) =>
                     <li key={user._id} className="list-row">
-                        <div><img className="size-10 rounded-box" src={`${import.meta.env.VITE_DUMMY_IMG_URL}`} /></div>
+                        <div><img className="size-10 rounded-box" src={user.photoUrl} /></div>
                         <div>
                             <div>{user.firstName}</div>
                             <div className="text-xs uppercase font-semibold opacity-60">{user.about}</div>

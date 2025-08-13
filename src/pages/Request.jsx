@@ -35,10 +35,10 @@ const Request = () => {
                 <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Your Pending Connection Request</li>
                 {requestList.map((req) => (
                     <li key={req._id} className="list-row">
-                        <div><img className="size-10 rounded-box" src={`${import.meta.env.VITE_DUMMY_IMG_URL}`} /></div>
+                        <div><img className="size-10 rounded-box" src={req?.photoUrl} /></div>
                         <div>
                             <div>{req.firstName}</div>
-                            <div className="text-xs uppercase font-semibold opacity-60">{req.about}</div>
+                            <div className="text-xs uppercase font-semibold opacity-60 line-clamp-2">{req.about}</div>
                         </div>
                         <button onClick={() => handleStatusChangeClick("accepted", req._id)} className="btn btn-square btn-ghost hover:bg-green-100 text-green-500">
                             <svg className="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" fill="none"

@@ -1,32 +1,53 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
+import { updateUser } from "../redux/slice/userSlice";
 
 const Profile = () => {
     const user = useSelector((store) => store.user);
     const navigate = useNavigate();
     const [showToast, setShowToast] = useState(false);
-    const [profileImg, setProfileImg] = useState(import.meta.env.VITE_DUMMY_IMG_URL);
+    const [profileImgFile, setProfileImgFile] = useState(null);
+    const [profileImgPreview, setProfileImgPreview] = useState(import.meta.env.VITE_DUMMY_IMG_URL);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [about, setAbout] = useState("");
     const [age, setAge] = useState("");
+    const dispatch = useDispatch();
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setProfileImgFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
-                setProfileImg(reader.result);
+                setProfileImgPreview(reader.result);
             };
             reader.readAsDataURL(file);
         }
     };
-    const handleSaveProfileClick = () => {
-        setShowToast(true);
-        setTimeout(() => {
-            setShowToast(false);
-        }, 2000)
+    const handleSaveProfileClick = async () => {
+        try {
+            const formData = new FormData();
+
+            if (firstName !== user.firstName) formData.append("firstName", firstName);
+            if (lastName !== user.lastName) formData.append("lastName", lastName);
+            if (about !== user.about) formData.append("about", about);
+            if (age !== user.age) formData.append("age", age);
+            if (profileImgFile) {
+                formData.append("profileImg", profileImgFile);
+            }
+
+            const res = await axios.patch(`${import.meta.env.VITE_BASE_URL}/profile/edit`, formData, { withCredentials: true });
+            dispatch(updateUser(res?.data?.user));
+            setShowToast(true);
+            setTimeout(() => {
+                setShowToast(false);
+            }, 2000)
+        } catch (err) {
+            console.log(err.message);
+        }
     }
     useEffect(() => {
         if (user) {
@@ -34,7 +55,7 @@ const Profile = () => {
             setLastName(user.lastName || "");
             setAbout(user.about || "");
             setAge(user.age || "");
-            setProfileImg(user.profileImg || import.meta.env.VITE_DUMMY_IMG_URL);
+            setProfileImgPreview(user.photoUrl || import.meta.env.VITE_DUMMY_IMG_URL);
         }
     }, [user]);
 
@@ -48,7 +69,7 @@ const Profile = () => {
             <div className="card bg-base-300 w-96 shadow-sm">
                 <figure>
                     <img
-                        src={profileImg}
+                        src={profileImgPreview}
                         alt="profile-pic" />
                 </figure>
                 <input type="file" onChange={handleImageUpload} className="file-input w-1/2 my-2 mx-auto" />

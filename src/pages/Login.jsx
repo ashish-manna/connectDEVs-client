@@ -94,7 +94,7 @@ const Login = () => {
                             </g>
                         </svg>
                         <input
-                            type="text"
+                            type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
