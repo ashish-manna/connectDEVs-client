@@ -1,7 +1,7 @@
 const UserCard = ({ user }) => {
     const { firstName, about } = user;
     return (
-        <div className="card bg-base-100 w-96 shadow-sm">
+        <div className="card bg-base-300 w-96 shadow-sm">
             <figure>
                 <img
                     src={`${import.meta.env.VITE_DUMMY_IMG_URL}`}
