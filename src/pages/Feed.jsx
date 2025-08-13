@@ -20,7 +20,7 @@ const Feed = () => {
         fetchFeed();
     }, [])
 
-    if (feedList?.length === 0) return <div>You have got all in your feed.</div>
+    if (feedList?.length === 0) return <div className="text-center opacity-75">You have got all in your feed.</div>
 
     return feedList && (
         <div className="w-full flex justify-center px-5 md:py-0 my-15 md:my-20">
