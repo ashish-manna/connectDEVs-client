@@ -36,7 +36,7 @@ const Navbar = () => {
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="Tailwind CSS Navbar component"
-                                    src={`${import.meta.env.VITE_DUMMY_IMG_URL}`} />
+                                    src={user.photoUrl} />
                             </div>
                         </div>
                         <ul
