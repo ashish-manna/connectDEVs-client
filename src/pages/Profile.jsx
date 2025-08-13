@@ -39,7 +39,7 @@ const Profile = () => {
     }, [user]);
 
     return user && (
-        <div className="w-full flex justify-center my-10 md:my-10">
+        <div className="w-full flex justify-center my-10 px-5 md:my-10">
             {showToast && <div className="toast toast-top toast-center z-999">
                 <div className="alert alert-success">
                     <span>Profile saved successfully.</span>

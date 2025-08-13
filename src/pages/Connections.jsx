@@ -11,7 +11,6 @@ const Connections = () => {
         if (connectionList) return;
         try {
             const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/connections`, { withCredentials: true });
-            console.log(res.data.data);
             dispatch(addConnection(res?.data?.data));
         } catch (err) {
             console.log(err.message);
