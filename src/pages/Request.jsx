@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequest, removeRequest } from "../redux/slice/requestSlice";
+import { updateConnection } from "../redux/slice/connectionSlice";
 
 const Request = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,10 @@ const Request = () => {
         try {
             axios.post(`${import.meta.env.VITE_BASE_URL}/request/review/${status}/${id}`, {}, { withCredentials: true });
             dispatch(removeRequest(id));
+            if (status === "accepted") {
+                const newConnection = requestList.find(user => user._id === id);
+                dispatch(updateConnection([newConnection]));
+            }
         } catch (err) {
             console.log(err.message);
         }

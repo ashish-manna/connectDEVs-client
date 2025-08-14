@@ -9,7 +9,7 @@ const Login = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [age, setAge] = useState(20);
+    const [age, setAge] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [errMessage, setErrorMessage] = useState("");
