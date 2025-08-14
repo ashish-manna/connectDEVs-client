@@ -29,8 +29,8 @@ const Connections = () => {
                     <li key={user._id} className="list-row">
                         <div><img className="size-10 rounded-box" src={user.photoUrl} /></div>
                         <div>
-                            <div>{user.firstName}</div>
-                            <div className="text-xs uppercase font-semibold opacity-60">{user.about}</div>
+                            <div className="text-md font-bold">{user.firstName}</div>
+                            <div className="text-xs uppercase font-semibold opacity-60 line-clamp-2">{user.about}</div>
                         </div>
                     </li>)}
             </ul>
