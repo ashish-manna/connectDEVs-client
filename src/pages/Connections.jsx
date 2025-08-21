@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../redux/slice/connectionSlice";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
     const dispatch = useDispatch();
@@ -26,13 +27,13 @@ const Connections = () => {
             <ul className="list bg-base-100 rounded-box shadow-md">
                 <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Your Connections</li>
                 {connectionList.map((user) =>
-                    <li key={user._id} className="list-row">
+                    <Link to={`/chat/${user._id}`} key={user._id} className="list-row">
                         <div><img className="size-10 rounded-box" src={user.photoUrl} /></div>
                         <div>
                             <div className="text-md font-bold">{user.firstName}</div>
                             <div className="text-xs uppercase font-semibold opacity-60 line-clamp-2">{user.about}</div>
                         </div>
-                    </li>)}
+                    </Link>)}
             </ul>
         </div>
     )
