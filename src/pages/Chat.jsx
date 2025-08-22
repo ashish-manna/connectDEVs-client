@@ -1,17 +1,49 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { userProfile } from "../mocks/userProfile"
+import { createSocket } from "../utils/socket";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
-    // const [message, setMessage] = useState([]);
+    const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const { toUserId } = useParams();
+    const user = useSelector((store) => store?.user);
+    const userId = user?._id;
 
     const sendMessage = () => {
-        console.log(newMessage);
+        const socket = createSocket();
+        socket.emit("sendMessage", {
+            firstName: user.firstName,
+            userId,
+            toUserId,
+            text: newMessage,
+        });
         setNewMessage("");
     }
+    useEffect(() => {
+        if (!userId) {
+            return;
+        }
+        const socket = createSocket();
+
+        socket.emit("joinChat", {
+            firstName: user.firstName,
+            userId,
+            toUserId,
+        });
+
+        socket.on("receivedMessage", ({ firstName, text }) => {
+            setMessages((messages) => [...messages, { firstName, text }]);
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [userId, toUserId]);
     return (
         <div className="w-full">
-            <div className="flex gap-2 items-center bg-base-300 py-2 px-1">
+            <div className="flex gap-2 items-center bg-base-300 py-2 px-1 fixed top-0 w-full z-99">
                 <div className="avatar avatar-online">
                     <div className="w-10 rounded-full">
                         <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" />
@@ -23,13 +55,12 @@ const Chat = () => {
                 </div>
             </div>
             <div className="w-full md:w-2/3 mx-auto h-screen lg:h-[75vh] flex flex-col justify-between pb-1 md:bg-base-200">
-                <div>
-                    <div className="chat chat-start">
-                        <div className="chat-bubble chat-bubble-secondary">What kind of nonsense is this</div>
-                    </div>
-                    <div className="chat chat-end">
-                        <div className="chat-bubble chat-bubble-primary">Calm down, Anakin.</div>
-                    </div>
+                <div className="overflow-scroll mt-15">
+                    {messages.map((msg, index) =>
+                        <div key={index} className={`chat ${msg.firstName === user.firstName ? "chat-end" : "chat-start"}`}>
+                            <div className={`chat-bubble ${msg.firstName === user.firstName ? "chat-bubble-primary" : "chat-bubble-secondary"}`}>{msg.text}</div>
+                        </div>
+                    )}
                 </div>
                 <div className="w-full flex px-1 justify-between gap-0.5">
                     <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} type="text" placeholder="Type here" className="input w-full" />
