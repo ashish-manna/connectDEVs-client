@@ -1,6 +1,14 @@
+import { useState } from "react"
 import { userProfile } from "../mocks/userProfile"
 
 const Chat = () => {
+    // const [message, setMessage] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
+
+    const sendMessage = () => {
+        console.log(newMessage);
+        setNewMessage("");
+    }
     return (
         <div className="w-full">
             <div className="flex gap-2 items-center bg-base-300 py-2 px-1">
@@ -24,8 +32,8 @@ const Chat = () => {
                     </div>
                 </div>
                 <div className="w-full flex px-1 justify-between gap-0.5">
-                    <input type="text" placeholder="Type here" className="input w-full" />
-                    <button className="btn btn-info">Sent</button>
+                    <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} type="text" placeholder="Type here" className="input w-full" />
+                    <button onClick={sendMessage} className="btn btn-info">Sent</button>
                 </div>
             </div>
         </div>
