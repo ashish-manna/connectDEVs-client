@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import { userProfile } from "../mocks/userProfile"
 import { createSocket } from "../utils/socket";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -12,6 +11,7 @@ const Chat = () => {
     const { toUserId } = useParams();
     const user = useSelector((store) => store?.user);
     const userId = user?._id;
+    const [targetUserProfile, setTargetUserProfile] = useState(null);
 
     const sendMessage = () => {
         if (!newMessage.trim()) return;
@@ -35,6 +35,7 @@ const Chat = () => {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
     const fetchChats = async () => {
         try {
             const chats = await axios.get(`${import.meta.env.VITE_BASE_URL}/chat/${toUserId}`, { withCredentials: true });
@@ -50,7 +51,17 @@ const Chat = () => {
             console.log(err);
         }
     }
+    const fetchTargetProfile = async () => {
+        try {
+            const targetUser = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile/chat/${toUserId}`, { withCredentials: true })
+            console.log(targetUser.data);
+            setTargetUserProfile(targetUser?.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
     useEffect(() => {
+        fetchTargetProfile();
         fetchChats();
     }, [])
     useEffect(() => {
@@ -76,14 +87,14 @@ const Chat = () => {
     return (
         <div className="w-full">
             <div className="flex gap-2 items-center bg-base-300 py-2 px-1 fixed top-0 w-full z-99">
-                <div className="avatar avatar-online">
+                <div className="avatar avatar-offline">
                     <div className="w-10 rounded-full">
-                        <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" />
+                        <img src={targetUserProfile?.photoUrl} />
                     </div>
                 </div>
                 <div>
-                    <div className="text-white">{userProfile.firstName}</div>
-                    <div className="text-gray-400 text-sm">Age: {userProfile.age}</div>
+                    <div className="text-white">{targetUserProfile?.firstName}</div>
+                    <div className="text-gray-400 text-sm">Age: {targetUserProfile?.age}</div>
                 </div>
             </div>
             <div className="w-full md:w-2/3 mx-auto h-screen lg:h-[75vh] flex flex-col justify-between pb-1 md:bg-base-200">

@@ -1,5 +1,5 @@
 import Navbar from '../components/Navbar'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 import axios from 'axios'
 import { useEffect } from 'react'
@@ -10,6 +10,8 @@ const Layout = () => {
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
     const navigate = useNavigate();
+    const location = useLocation();
+    const isChatPage = location.pathname.startsWith('/chat');
 
     const fetchUser = async () => {
         if (user) return;
@@ -26,11 +28,11 @@ const Layout = () => {
     }, []);
     return (
         <div className=''>
-            <Navbar />
-            <div className='pt-20 min-h-screen'>
+            {!isChatPage && <Navbar />}
+            <div className={`${!isChatPage ? "pt-20" : "pt-0"} min-h-screen`}>
                 <Outlet />
             </div>
-            <Footer />
+            {!isChatPage && <Footer />}
         </div>
     )
 }
