@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { userProfile } from "../mocks/userProfile"
 import { createSocket } from "../utils/socket";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const messagesEndRef = useRef(null)
     const { toUserId } = useParams();
     const user = useSelector((store) => store?.user);
     const userId = user?._id;
 
     const sendMessage = () => {
+        if (!newMessage.trim()) return;
         const socket = createSocket();
         socket.emit("sendMessage", {
             firstName: user.firstName,
@@ -21,6 +24,35 @@ const Chat = () => {
         });
         setNewMessage("");
     }
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    };
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+    const fetchChats = async () => {
+        try {
+            const chats = await axios.get(`${import.meta.env.VITE_BASE_URL}/chat/${toUserId}`, { withCredentials: true });
+            const chatMessages = chats?.data?.messages.map((msg) => {
+                const { senderId, text } = msg;
+                return {
+                    firstName: senderId?.firstName,
+                    text
+                }
+            })
+            setMessages(chatMessages);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    useEffect(() => {
+        fetchChats();
+    }, [])
     useEffect(() => {
         if (!userId) {
             return;
@@ -56,14 +88,25 @@ const Chat = () => {
             </div>
             <div className="w-full md:w-2/3 mx-auto h-screen lg:h-[75vh] flex flex-col justify-between pb-1 md:bg-base-200">
                 <div className="overflow-scroll mt-15">
-                    {messages.map((msg, index) =>
-                        <div key={index} className={`chat ${msg.firstName === user.firstName ? "chat-end" : "chat-start"}`}>
-                            <div className={`chat-bubble ${msg.firstName === user.firstName ? "chat-bubble-primary" : "chat-bubble-secondary"}`}>{msg.text}</div>
+                    {messages.length > 0 ? (
+                        <>
+                            {messages.map((msg, index) =>
+                                <div key={index} className={`chat ${msg?.firstName === user?.firstName ? "chat-end" : "chat-start"}`}>
+                                    <div className={`chat-bubble ${msg?.firstName === user?.firstName ? "chat-bubble-primary" : "chat-bubble-secondary"}`}>
+                                        {msg?.text}
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={messagesEndRef} />
+                        </>
+                    ) : (
+                        <div className="flex items-center justify-center h-full text-gray-500">
+                            No messages yet. Start a conversation!
                         </div>
                     )}
                 </div>
                 <div className="w-full flex px-1 justify-between gap-0.5">
-                    <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} type="text" placeholder="Type here" className="input w-full" />
+                    <input value={newMessage} onKeyPress={handleKeyPress} onChange={(e) => setNewMessage(e.target.value)} type="text" placeholder="Type here" className="input w-full" />
                     <button onClick={sendMessage} className="btn btn-info">Sent</button>
                 </div>
             </div>
