@@ -19,9 +19,9 @@ const App = () => {
             <Route path='/profile' element={<Profile />} />
             <Route path='/connections' element={<Connections />} />
             <Route path='/request' element={<Request />} />
+            <Route path='/chat/:toUserId' element={<Chat />} />
             <Route path='/login' element={<Login />} />
           </Route>
-          <Route path='/chat/:toUserId' element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </Provider>
