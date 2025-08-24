@@ -53,7 +53,7 @@ const Chat = () => {
     }
     const fetchTargetProfile = async () => {
         try {
-            const targetUser = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile/chat/${toUserId}`, { withCredentials: true })
+            const targetUser = await axios.get(`${import.meta.env.VITE_BASE_URL}/chat/profile/${toUserId}`, { withCredentials: true })
             console.log(targetUser.data);
             setTargetUserProfile(targetUser?.data);
         } catch (err) {
