@@ -8,6 +8,7 @@ import Profile from './pages/Profile'
 import Connections from './pages/Connections'
 import Request from './pages/Request'
 import Chat from './pages/Chat'
+import BuyMeChai from './pages/BuyMeChai'
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route path='/connections' element={<Connections />} />
             <Route path='/request' element={<Request />} />
             <Route path='/chat/:toUserId' element={<Chat />} />
+            <Route path='/buymechai' element={<BuyMeChai />} />
             <Route path='/login' element={<Login />} />
           </Route>
         </Routes>

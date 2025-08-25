@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../redux/slice/feedSlice";
 import UserCard from "../components/UserCard";
+import { Link } from "react-router-dom";
 
 const Feed = () => {
     const dispatch = useDispatch();
@@ -24,6 +25,9 @@ const Feed = () => {
 
     return feedList && (
         <div className="w-full flex justify-center px-5 md:py-0 my-15 md:my-20">
+            <Link to={'/buymechai'}>
+                <img src="/mug.png" className="w-10 h-10 fixed right-2 top-20" />
+            </Link>
             <UserCard user={feedList[0]} />
         </div>
     )
