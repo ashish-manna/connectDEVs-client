@@ -86,7 +86,7 @@ const Chat = () => {
     }, [userId, toUserId]);
     return (
         <div className="w-full">
-            <div className="flex gap-2 items-center bg-base-300 py-2 px-1 fixed top-0 w-full z-99">
+            <div className="flex gap-2 items-center bg-[#15191E] text-white py-2 px-1 fixed top-0 w-full z-99">
                 <div className="avatar avatar-offline">
                     <div className="w-10 rounded-full">
                         <img src={targetUserProfile?.photoUrl} />

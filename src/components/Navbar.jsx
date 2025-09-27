@@ -24,7 +24,7 @@ const Navbar = () => {
         }
     }
     return (
-        <div className="navbar fixed top-0 bg-base-300 shadow-sm z-99">
+        <div className="navbar fixed top-0 text-white bg-[#15191E] shadow-sm z-99">
             <div className="flex-1">
                 <Link to={"/"} className="btn btn-ghost text-xl">ConnectDEVs</Link>
             </div>
@@ -41,7 +41,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-300 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                            className="menu menu-sm dropdown-content bg-[#15191E] text-white rounded-box z-1 mt-3 w-52 p-2 shadow">
                             <li>
                                 <Link to={"/profile"} className="justify-between">
                                     Profile

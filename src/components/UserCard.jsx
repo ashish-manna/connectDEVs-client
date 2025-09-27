@@ -25,7 +25,7 @@ const UserCard = ({ user }) => {
     }, [user._id]);
 
     return (
-        <div key={user._id} className={`card bg-base-300 w-96 shadow-sm transition-all mb-2 duration-400 ease-out ${status === "interested"
+        <div key={user._id} className={`card bg-[#15191E] text-white w-96 shadow-sm transition-all mb-2 duration-400 ease-out ${status === "interested"
             ? "rotate-12 translate-x-[200px] opacity-0"
             : ""
             }

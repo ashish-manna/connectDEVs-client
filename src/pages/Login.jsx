@@ -34,10 +34,10 @@ const Login = () => {
         }
     }
     return (
-        <div className="w-full px-5 flex justify-center py-10 md:py-20">
+        <div className="w-full text-black px-5 flex justify-center py-10 md:py-20">
             <div className="bg-neutral p-10 rounded-lg">
                 <div className="flex flex-col gap-3">
-                    <h1 className="font-bold text-4xl mb-2">{isLoginPage ? "Login" : "Sign Up"}</h1>
+                    <h1 className="font-bold text-white text-4xl mb-2">{isLoginPage ? "Login" : "Sign Up"}</h1>
                     {!isLoginPage && <label className="input validator">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g
@@ -119,7 +119,7 @@ const Login = () => {
                         </svg>
                         <input type="age" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" required />
                     </label>}
-                    <p className="text-[11px] mt-2">{!isLoginPage ? "Already Have an Account?" : "Don't Have any Account?"} <span className="font-bold text-sm cursor-pointer" onClick={() => {
+                    <p className="text-[11px] mt-2 text-white">{!isLoginPage ? "Already Have an Account?" : "Don't Have any Account?"} <span className="font-bold text-sm cursor-pointer" onClick={() => {
                         setIsLoginPage(!isLoginPage);
                     }}>{isLoginPage ? "Sign Up" : "Login"}</span></p>
                     <button onClick={isLoginPage ? handleLogin : handleSignUp} className="btn btn-active btn-primary">SUBMIT</button>
