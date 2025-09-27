@@ -66,7 +66,7 @@ const Profile = () => {
                     <span>Profile saved successfully.</span>
                 </div>
             </div>}
-            <div className="card bg-base-300 w-96 shadow-sm">
+            <div className="card bg-[#15191E] w-96 shadow-sm">
                 <figure>
                     <img
                         src={profileImgPreview}

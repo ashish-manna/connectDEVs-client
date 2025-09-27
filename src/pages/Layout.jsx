@@ -27,7 +27,7 @@ const Layout = () => {
         fetchUser();
     }, []);
     return (
-        <div className=''>
+        <div className='bg-[#1D232A]'>
             {!isChatPage && <Navbar />}
             <div className={`${!isChatPage ? "pt-20" : "pt-0"} min-h-screen`}>
                 <Outlet />

@@ -25,9 +25,9 @@ const Feed = () => {
 
     return feedList && (
         <div className="w-full flex justify-center px-5 md:py-0 my-15 md:my-20">
-            <Link to={'/buymechai'}>
+            {/* <Link to={'/buymechai'}>
                 <img src="/mug.png" className="w-10 h-10 fixed right-2 top-20" />
-            </Link>
+            </Link> */}
             <UserCard user={feedList[0]} />
         </div>
     )
